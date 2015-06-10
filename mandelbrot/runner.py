@@ -1,38 +1,92 @@
 #!/usr/bin/env python
-"""1 liner to explain this project"""
+"""Mandelbrot calculations with different implementations."""
 import argparse
 import logging
-from mandelbrot import config
+from abc import ABC
+import sys
 
+import naive
+#from mandelbrot import optimised
+#from mandelbrot import parallel 
 
-# See the README for notes on running this using either:
-# arguments via __main__
-# a configuration environment variable
+class MandelbrotCalculator(ABC):
+    """
+    Structure for calculation of mandelbrot sets.
 
+    Provides a structure for the processing involved with 
+    each implementation/approach to calculate a mandelbrot set. 
+    The calculation itself is left to derived classes, 
+    shared support functionality is implemented here (DRY principle). 
+    """
 
-def dummy_function():
-    """Delete this dummy function, it is here for the unittests"""
-    return "Hello"
+    def __init__(self, 
+    ):
+        pass
 
+    def calculate(self,
+    ):
+        pass
+
+    def save(self,
+    ):
+        pass
+
+    def plot(self,
+    ):
+        pass
+
+    def save_pdf(self, 
+    ):
+        pass
+
+    def run(self,
+    ):
+        ms = calculate()
+        save(ms)
+        fig = plot(ms)
+        save_pdf(fig)
 
 if __name__ == "__main__":
     # Create an argument parser which also shows the defaults when --help is
     # called
-    parser = argparse.ArgumentParser(description='Project description for this prototype...',
+    parser = argparse.ArgumentParser(description='Various mandelbrot set implementations',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    # These two lines show a positional (mandatory) argument and an optional argument
-    # parser.add_argument('positional_arg', type=str, help='required positional argument')
-    parser.add_argument('--env', default="dev", help='optional configuration argument')
-    parser.add_argument('--a_parameter', type=int, default=None, help='some other parameter that is already in the Conf')
+
+    parser.add_argument('--pre_min', type=float, default=-2., help='Minimal value for Re(p) axis')
+    parser.add_argument('--pre_max', type=float, default=1., help='Maximal value for Re(p) axis')
+    parser.add_argument('--Prim', type=int, default=5000, help='Steps on the Im(p) axis')
+
+    parser.add_argument('--pim_min', type=float, default=-1.5, help='Minimal value for Im(p) axis')
+    parser.add_argument('--pim_max', type=float, default=1.5, help='Maximal value for Im(p) axis')
+    parser.add_argument('--Pre', type=int, default=5000, help='Steps on the Re(p) axis')
+
+    parser.add_argument('--T', type=int, default=10, help='Threshold T for calculation')
+
+    parser.add_argument('--naive', type=bool, default=True, help='Whether to run the naive calculation')
+    
+
     args = parser.parse_args()
 
-    conf = config.get(args.env, overrides=vars(args))  # Note that the environment is optional (it can use a config environment instead)
-    logger = logging.getLogger("logger_for_template")
-    logger.info("These are our args: {}".format(args))
-    logger.info("This is our configuration: {}".format(conf))
-    logger.info("This is an example log message, logging is configured once config.get() has been called")
-    logger.info("The value of a_parameter={}".format(conf.a_parameter))
+    logger = logging.getLogger("mandelbrot")
+    # remove any existing handlers
+    for h in logger.handlers:
+        logger.removeHandler(h)
+    # only add a new handler if we've not set one yet
+    if len(logger.handlers) == 0:
+        fmt = '%(asctime)s.%(msecs)d p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s'
+        datefmt = '%Y-%m-%d %H:%M:%S'
+        
+        ch = logging.StreamHandler(sys.stdout)
+        #ch.setLevel(log_level)
+        
+        formatter = logging.Formatter(fmt, datefmt=datefmt)
+        ch.setFormatter(formatter)
+        logger.addHandler(ch)
+        
 
-    config.configure_logging(logging.CRITICAL)
-    logger.info("This log message won't be shown")
-    logger.critical("This critical message will now be shown!")
+    logger.info('Arguments: {}'.format(args))
+
+    if args.naive:
+        logger.info('Running')
+        naive.Calculator().run()
+        logger.info('Done')
