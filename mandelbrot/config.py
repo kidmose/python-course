@@ -7,7 +7,7 @@ import logging
 
 # environment variable for configuration
 CONFIG_ENV_VAR = "CONFIG"
-LOGGER_NAME = "logger_for_template"  # CHOOSE YOUR OWN NAME FOR YOUR APP
+LOGGER_NAME = "mandelbrot" 
 
 
 def configure_logging(log_level):

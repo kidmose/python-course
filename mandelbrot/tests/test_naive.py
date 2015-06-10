@@ -3,8 +3,8 @@
 
 import unittest
 import logging
-from python_template_with_config import start_here
-from python_template_with_config import config
+from mandelbrot import naive
+from mandelbrot import config
 
 # Run this using:
 # $ nosetests
@@ -22,7 +22,7 @@ class Test(unittest.TestCase):
     def test1(self):
         print(self.conf)
         logging.info("Testing some very basic things")
-        self.assertEqual(start_here.dummy_function(), "Hello")
+        self.assertEqual(naive.dummy_function(), "Hello")
         self.assertEqual(self.conf.name, "test")
         self.assertEqual(self.conf.a_parameter, A_PARAMETER)
 

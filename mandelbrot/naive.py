@@ -2,8 +2,7 @@
 """1 liner to explain this project"""
 import argparse
 import logging
-from python_template_with_config import config
-from python_template_with_config import another_module  # just to show how to import another module in this package
+from mandelbrot import config
 
 
 # See the README for notes on running this using either:
