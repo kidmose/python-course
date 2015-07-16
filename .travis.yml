@@ -10,4 +10,4 @@ python:
 install:
   - "python setup.py develop"
 # command to run tests
-script: py.test -v 
+script: py.test -v mandelbrot
