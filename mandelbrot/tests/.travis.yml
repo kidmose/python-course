@@ -8,7 +8,6 @@ python:
   - "nightly"
 # command to install dependencies
 install:
-  - "pip install ."
-  - "pip install -r requirements.txt"
+  - "python setup.py develop"
 # command to run tests
-script: nosetests
+script: py.test -v 

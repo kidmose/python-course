@@ -15,11 +15,11 @@ if __name__ == "__main__":
 
     parser.add_argument('--pre_min', type=float, default=-2., help='Minimal value for Re(p) axis')
     parser.add_argument('--pre_max', type=float, default=1., help='Maximal value for Re(p) axis')
-    parser.add_argument('--Prim', type=int, default=5000, help='Steps on the Im(p) axis')
+    parser.add_argument('--Pre', type=int, default=5000, help='Steps on the Re(p) axis')
 
     parser.add_argument('--pim_min', type=float, default=-1.5, help='Minimal value for Im(p) axis')
     parser.add_argument('--pim_max', type=float, default=1.5, help='Maximal value for Im(p) axis')
-    parser.add_argument('--Pre', type=int, default=5000, help='Steps on the Re(p) axis')
+    parser.add_argument('--Pim', type=int, default=5000, help='Steps on the Im(p) axis')
 
     parser.add_argument('--T', type=int, default=10, help='Threshold T for calculation')
 
@@ -32,6 +32,6 @@ if __name__ == "__main__":
     logger.info('Arguments: {}'.format(args))
 
     if args.naive:
-        logger.info('Running')
-        naive.Calculator().run()
+        logger.info('Running naive')
+        naive.NaiveCalculator(**dict(args._get_kwargs())).run()
         logger.info('Done')

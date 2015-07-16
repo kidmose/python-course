@@ -1,7 +1,5 @@
 from mandelbrot import MandelbrotCalculator
 
-class Calculator(MandelbrotCalculator):
-
-    def Calculator(self):
-        pass
+class NaiveCalculator(MandelbrotCalculator):
+    pass
 
