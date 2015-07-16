@@ -35,3 +35,6 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+/env/
+/README.html
+/mandelbrot-0.0.1/

@@ -12,10 +12,12 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=[],
+    install_requires=[
+        'pytest',
+    ],
     classifiers=[
         'Environment :: Console',
-        'Intended Audience :: Developers',
+        'Intended Audience :: Course responsibles',
         'Operating System :: OS Independent',
         'Programming Language :: Python']
 )
