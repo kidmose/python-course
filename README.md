@@ -9,28 +9,27 @@ For the written part of the hand-in please refer to this document and comments i
 
 # Setup
 
-## Development environment
+## Requirements
 This serves to document my set-up as a known good enviroment. 
-To my knowledge the code is not dependent on specifically using Anaconda for python nor on the OS.
-Be cautious of running in python 2.7 and make sure to run unittest.
+Not compatible with python 2.7.
+Expected to be OS independent, but I develop and test on Linux Mint as specified below. 
 
  * Python 3.4+
- * Anaconda set up as per course materials
- * Linux Mint 17.1 x86_64 on Oracle VirtualBox
+ * Linux Mint 17.1 x86_64 on Oracle VirtualBox (At lest not tested elsewhere)
 
 ## Installation instructions
 
-	$ export PATH="/home/dkegokid/opt/anaconda3/bin:$PATH"  # Anaconda
-	$ virtualenv env  # Avoid interfering with rest of system ...
-	$ source env/bin/activate  # ... by using virtual enviroment
+	$ virtualenv -p python3 env  # Create virtual env for isolation
+	$ source env/bin/activate  # Enter virtual environment
     $ python setup.py develop  # "develop" for symlinks to reflect code changes
 	
-	# Alternatively, for installation that will not be edited:
+	# Alternatively, for an installation that will not be edited:
     $ python setup.py install
 
 ## Test
 
-To execute unittest go to the `utils` folder and run `./unittests.sh` (Requires `sh`, alternatively check file for command).
+How to run
+TravisCI
 
 # Project structure
 
@@ -49,7 +48,8 @@ Cloned cloned from Ian Ozswald's template and remote updated locally to point to
 	template        git@github.com:ianozsvald/python_template_with_config.git (fetch)
 	template        git@github.com:ianozsvald/python_template_with_config.git (push)
 
-## Unit testing
+Using `master` branch for stable code and `development` branch for unstable developement.
+Implement the full gitflow workflow is deemed overkill for a small, single contributor projet.
 
 ## Test driven development
 
@@ -57,7 +57,7 @@ Cloned cloned from Ian Ozswald's template and remote updated locally to point to
 
 # Unimplemented ideas
 
+ * how to run tests
  * Test coverage
  * Smart logging
  * PEP8/pyflake evaluation
-

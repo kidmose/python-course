@@ -1,31 +1,16 @@
 #!/usr/bin/env python
-"""Tests for start_here"""
+"""Tests for naive"""
 
 import unittest
-import logging
+import mandelbrot
 from mandelbrot import naive
-from mandelbrot import config
 
-# Run this using:
-# $ nosetests
-# or
-# $ nosetests -s  # show stdout for the print
-
-A_PARAMETER = 99
-
+logger = mandelbrot.get_logger(__name__)
 
 class Test(unittest.TestCase):
-    def setUp(self):
-        # get a config object (this is optional, remove if you don't need it)
-        self.conf = config.get('test')
-
     def test1(self):
-        print(self.conf)
-        logging.info("Testing some very basic things")
-        self.assertEqual(naive.dummy_function(), "Hello")
-        self.assertEqual(self.conf.name, "test")
-        self.assertEqual(self.conf.a_parameter, A_PARAMETER)
-
+        logger.error("Not testing anything!")
+        self.assertTrue(False)
 
 if __name__ == "__main__":
     unittest.main()

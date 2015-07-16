@@ -1,6 +1,7 @@
-from mandelbrot.runner import MandelbrotCalculator
+from mandelbrot import MandelbrotCalculator
 
 class Calculator(MandelbrotCalculator):
 
     def Calculator(self):
         pass
+
