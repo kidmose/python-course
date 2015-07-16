@@ -1,5 +1,7 @@
 # Mini project for course in python calculating Mandelbrot fractals #
 
+[![Build Status](https://travis-ci.org/kidmose/python-course.svg?branch=master)](https://travis-ci.org/kidmose/python-course)
+
 # Credit
  * `mandelbrot` package is the work of Egon Kidmose.
  * Originally forked from [Ian Oszwald's python_template_with_config](https://github.com/ianozsvald/python_template_with_config) for use of `setuputils`, module structure etc.
