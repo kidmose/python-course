@@ -19,11 +19,14 @@ PARAM_LIST = {
 
 OUTPUT_DIR = "test-output"
 
-def purge_output_folder(path=OUTPUT_DIR):
+def purge_output_dir(path=OUTPUT_DIR):
+    delete_output_dir(path=path)
+    if os.path.exists(path):
+        raise Exception("Failed to removed test output folder")
+    os.makedirs(path)
+
+def delete_output_dir(path=OUTPUT_DIR):
     if os.path.isfile(path):
         os.remove(path)
     if os.path.isdir(path):
         shutil.rmtree(path)
-    if os.path.exists(path):
-        raise Exception("Failed to removed test output folder")
-    os.makedirs(path)

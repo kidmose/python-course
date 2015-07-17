@@ -3,6 +3,10 @@ Mini project for course in python calculating Mandelbrot fractals.
 """
 import logging
 import sys
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 class MandelbrotCalculator(object):
     """
@@ -12,6 +16,8 @@ class MandelbrotCalculator(object):
     each implementation/approach to calculate a mandelbrot set. 
     The calculation itself is left to derived classes, 
     shared support functionality is implemented here. (DRY principle). 
+
+    See cli.py for explanation of arguments.
     """
 
     def __init__(self, *args, **kwargs):
@@ -26,6 +32,8 @@ class MandelbrotCalculator(object):
         except KeyError as e:
             logger.error("All parameters are mandatory.")
             raise e
+
+        self.output_dir = kwargs.get('output_dir', 'output')
 
         if self.pre_min >= self.pre_max:
             raise ValueError("min must be below max")
@@ -48,27 +56,37 @@ class MandelbrotCalculator(object):
 
     def save_data(self, mandelbrot_set, file_name):
         """Save the calculated data to a CSV file."""
+        if not os.path.exists(os.path.dirname(file_name)):
+            os.makedirs(os.path.dirname(file_name))
         with open(file_name, 'w') as f:
             for row in mandelbrot_set:
                 f.write(";".join([str(el) for el in row])+"\n")
 
-    def plot(self, mandelbrot_set):
-        """Plot the Mandelbrot set and return reference to figure."""
-        logger.warn("Not implemented in the base class")
-
-    def save_plot(self, figure, file_name):
-        """Save the figure to file_name."""
-        logger.warn("Not implemented in the base class")
+    def plot(self, mandelbrot_set, file_name):
+        """Plot the Mandelbrot set and save it to a file."""
+        data = np.array(mandelbrot_set)
+        fig, ax = plt.subplots()
+        heatmap = ax.pcolor(data, cmap=plt.cm.hot)
+        if not os.path.exists(os.path.dirname(file_name)):
+            os.makedirs(os.path.dirname(file_name))
+        plt.savefig(file_name, format="pdf")
 
     def run(self):
         """Runs the sequence of the above steps."""
         ms = self.calculate()
-        fig = self.plot(ms)
-        self.save_plot(fig, self.file_name_plot)
-        self.save_data(ms, self.file_name_data)
+        self.plot(ms, os.path.join(self.output_dir, self.file_name_plot))
+        self.save_data(ms, os.path.join(self.output_dir, self.file_name_data))
 
-    file_name_data = "DEFAULT_DATA_FILENAME.csv"
-    file_name_plot = "DEFAULT_FILE_NAME.pdf"
+    @property
+    def file_name_data(self):
+        """Name of file to store data in."""
+        raise NotImplementedError("Must be overridden in derived class")
+
+    @property
+    def file_name_plot(self):
+        """Name of file to store plot in."""
+        raise NotImplementedError("Must be overridden in derived class")
+
 
 def get_logger(name):
     logger = logging.getLogger(name)

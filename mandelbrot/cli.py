@@ -25,6 +25,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--naive', type=bool, default=True, help='Whether to run the naive calculation')
     
+    parser.add_argument('--output', type=str, default="output", help='Output folder')
 
     args = parser.parse_args()        
 

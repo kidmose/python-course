@@ -4,25 +4,26 @@
 import unittest
 import os
 from mandelbrot.naive import NaiveCalculator as C
-from mandelbrot.tests import PARAM_LIST
-from mandelbrot.tests import purge_output_folder
-from mandelbrot.tests import OUTPUT_DIR
+from mandelbrot import tests
 
-NAIVE_DATA_FILE = os.path.join(OUTPUT_DIR, "test-output-naive-data")
-NAIVE_PLOT_FILE = os.path.join(OUTPUT_DIR, "test-output-naive-plot")
+NAIVE_DATA_FILE = os.path.join(tests.OUTPUT_DIR, C.file_name_data)
+NAIVE_PLOT_FILE = os.path.join(tests.OUTPUT_DIR, C.file_name_plot)
 
 class Test(unittest.TestCase):
     def setUp(self):
-        purge_output_folder()
+        tests.purge_output_dir()
+
+    def tearDown(self):
+        tests.delete_output_dir()
 
     def test_calculate(self):
-        c = C(**PARAM_LIST)
+        c = C(**tests.PARAM_LIST)
         ms = c.calculate()
 
         # Check dimensions
-        self.assertEqual(len(ms), PARAM_LIST['Pim'])
+        self.assertEqual(len(ms), tests.PARAM_LIST['Pim'])
         for row in ms:
-            self.assertEqual(len(row), PARAM_LIST['Pre'])
+            self.assertEqual(len(row), tests.PARAM_LIST['Pre'])
 
         # check type
         for row in ms:
@@ -31,7 +32,7 @@ class Test(unittest.TestCase):
 
     def test_save_data(self):
         # test save and load
-        c = C(**PARAM_LIST)
+        c = C(**tests.PARAM_LIST)
         ms1 = c.calculate()
         c.save_data(ms1, NAIVE_DATA_FILE)
 
@@ -60,22 +61,13 @@ class Test(unittest.TestCase):
         self.assertEqual(ms1, ms2)
 
     def test_plot(self):
-        c = C(**PARAM_LIST)
+        c = C(**tests.PARAM_LIST)
         ms = c.calculate()
-        fig = c.plot(ms)
-        self.assertIsNotNone(fig)
-
-    def test_save_plot(self):
-        c = C(**PARAM_LIST)
-        ms = c.calculate()
-        fig = c.plot(ms)
-        c.save_plot(fig, NAIVE_PLOT_FILE)
-
+        c.plot(ms, NAIVE_PLOT_FILE)
         self.assertTrue(os.path.isfile(NAIVE_PLOT_FILE))
 
     def test_run(self):
-        c = C(**PARAM_LIST)
-        c.run()
+        c = C(**tests.PARAM_LIST).run()
 
 if __name__ == "__main__":
     unittest.main()
