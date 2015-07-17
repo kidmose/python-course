@@ -19,6 +19,11 @@ Expected to be OS independent, but I develop and test on Linux Mint as specified
  * Python 3.4+
  * Linux Mint 17.1 x86_64 on Oracle VirtualBox (At lest not tested elsewhere)
 
+If matplotlib available the setup script will install it, but has some dependecies.
+On Linux Mint 17.1 and presumeable recent ubuntus they can be installed with:
+
+	sudo apt-get install -qq build-essential python-dev python3-dev libpng12-dev libjpeg8-dev libfreetype6-dev
+
 ## Installation instructions
 
 	$ virtualenv -p python3 env  # Create virtual env for isolation

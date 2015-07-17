@@ -47,8 +47,10 @@ class MandelbrotCalculator(object):
         logger.warn("Not implemented in the base class")
 
     def save_data(self, mandelbrot_set, file_name):
-        """Save the calculated data to a file."""
-        logger.warn("Not implemented in the base class")
+        """Save the calculated data to a CSV file."""
+        with open(file_name, 'w') as f:
+            for row in mandelbrot_set:
+                f.write(";".join([str(el) for el in row])+"\n")
 
     def plot(self, mandelbrot_set):
         """Plot the Mandelbrot set and return reference to figure."""

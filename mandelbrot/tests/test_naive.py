@@ -1,72 +1,81 @@
 #!/usr/bin/env python
-"""Tests for naive"""
+"""Tests for module naive"""
 
 import unittest
-import mandelbrot
-from mandelbrot import MandelbrotCalculator as C
+import os
+from mandelbrot.naive import NaiveCalculator as C
+from mandelbrot.tests import PARAM_LIST
+from mandelbrot.tests import purge_output_folder
+from mandelbrot.tests import OUTPUT_DIR
 
-logger = mandelbrot.get_logger(__name__)
+NAIVE_DATA_FILE = os.path.join(OUTPUT_DIR, "test-output-naive-data")
+NAIVE_PLOT_FILE = os.path.join(OUTPUT_DIR, "test-output-naive-plot")
 
-PARAM_LIST = {
-    'pre_min': -1,
-    'pre_max': 1, 
-    'Pre': 10,
-    'pim_min': -1,
-    'pim_max': 1,
-    'Pim': 10,
-    'T': 10
-}
 class Test(unittest.TestCase):
-    def test_MandebrotCalculator(self):
-        self.assertIsNotNone(C(**PARAM_LIST))
+    def setUp(self):
+        purge_output_folder()
 
-        for (K, V) in PARAM_LIST.items():
-            with self.assertRaises(KeyError):
-                kwargs = {k: v for (k, v) in PARAM_LIST.items() if k != K}
-                C(**kwargs)
+    def test_calculate(self):
+        c = C(**PARAM_LIST)
+        ms = c.calculate()
 
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['pre_min'] = 1
-            kwargs['pre_max'] = -1
-            C(**kwargs)
+        # Check dimensions
+        self.assertEqual(len(ms), PARAM_LIST['Pim'])
+        for row in ms:
+            self.assertEqual(len(row), PARAM_LIST['Pre'])
 
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['pim_min'] = 1
-            kwargs['pim_max'] = -1
-            C(**kwargs)
+        # check type
+        for row in ms:
+            for el in row:
+                self.assertIsInstance(el, float)
 
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['Pre'] = 0
-            C(**kwargs)
+    def test_save_data(self):
+        # test save and load
+        c = C(**PARAM_LIST)
+        ms1 = c.calculate()
+        c.save_data(ms1, NAIVE_DATA_FILE)
 
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['Pre'] = -1
-            C(**kwargs)
+        self.assertTrue(os.path.isfile(NAIVE_DATA_FILE))
 
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['Pim'] = 0
-            C(**kwargs)
+        ms2 = list()
+        with open(NAIVE_DATA_FILE, 'r') as f:
+            for line in f:
+                row = list()
+                for cell in line.split(";"):
+                    row.append(float(cell))
+                ms2.append(row)
 
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['Pim'] = -1
-            C(**kwargs)
-            
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['T'] = 0
-            C(**kwargs)
+        self.assertEqual(ms1, ms2)
 
-        with self.assertRaises(ValueError):
-            kwargs = dict(PARAM_LIST)
-            kwargs['T'] = -1
-            C(**kwargs)
-            
+        # test that is overwrites, not appends
+        c.save_data(ms1, NAIVE_DATA_FILE)
+        ms2 = list()
+        with open(NAIVE_DATA_FILE, 'r') as f:
+            for line in f:
+                row = list()
+                for cell in line.split(";"):
+                    row.append(float(cell))
+                ms2.append(row)
+
+        self.assertEqual(ms1, ms2)
+
+    def test_plot(self):
+        c = C(**PARAM_LIST)
+        ms = c.calculate()
+        fig = c.plot(ms)
+        self.assertIsNotNone(fig)
+
+    def test_save_plot(self):
+        c = C(**PARAM_LIST)
+        ms = c.calculate()
+        fig = c.plot(ms)
+        c.save_plot(fig, NAIVE_PLOT_FILE)
+
+        self.assertTrue(os.path.isfile(NAIVE_PLOT_FILE))
+
+    def test_run(self):
+        c = C(**PARAM_LIST)
+        c.run()
 
 if __name__ == "__main__":
     unittest.main()

@@ -11,6 +11,10 @@ matrix:
     - python: 2.6
     - python: 2.7
     - python: nightly
+before_install:
+	- sudo apt-get update -qq
+# matplotlib dependencies
+	- sudo apt-get install -qq build-essential python-dev python3-dev libpng12-dev libjpeg8-dev libfreetype6-dev
 # command to install dependencies
 install:
   - "python setup.py develop"
