@@ -29,6 +29,7 @@ class MandelbrotCalculator(object):
             self.pim_max = kwargs['pim_max']
             self.Pim = kwargs['Pim']
             self.T = kwargs['T']
+            self.I = kwargs['I']
         except KeyError as e:
             logger.error("All parameters are mandatory.")
             raise e
@@ -96,10 +97,11 @@ def get_logger(name):
     # only add a new handler if we've not set one yet
     if len(logger.handlers) == 0:
         fmt = '%(asctime)s.%(msecs)d %(levelname)s p%(process)s {%(pathname)s:%(lineno)d} - %(message)s'
+        fmt = '%(name)s - %(message)s'
         datefmt = '%Y-%m-%d %H:%M:%S'
         
         ch = logging.StreamHandler(sys.stdout)
-        #ch.setLevel(log_level)
+        ch.setLevel(logging.INFO)
         
         formatter = logging.Formatter(fmt, datefmt=datefmt)
         ch.setFormatter(formatter)

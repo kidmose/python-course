@@ -14,7 +14,8 @@ PARAM_LIST = {
     'pim_min': -101,
     'pim_max': -100,
     'Pim': 14,
-    'T': 16
+    'T': 16,
+    'I': 20,
 }
 
 OUTPUT_DIR = "test-output"

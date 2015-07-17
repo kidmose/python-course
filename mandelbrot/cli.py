@@ -22,6 +22,7 @@ if __name__ == "__main__":
     parser.add_argument('--Pim', type=int, default=5000, help='Steps on the Im(p) axis')
 
     parser.add_argument('--T', type=int, default=10, help='Threshold T for calculation')
+    parser.add_argument('--I', type=int, default=100, help='Max iterations pr. point')
 
     parser.add_argument('--naive', type=bool, default=True, help='Whether to run the naive calculation')
     
