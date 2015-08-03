@@ -5,6 +5,7 @@ import logging
 import sys
 import os
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 
 
@@ -68,9 +69,12 @@ class MandelbrotCalculator(object):
         data = np.array(mandelbrot_set)
         fig, ax = plt.subplots()
         heatmap = ax.pcolor(data, cmap=plt.cm.hot)
+
         if not os.path.exists(os.path.dirname(file_name)):
             os.makedirs(os.path.dirname(file_name))
-        plt.savefig(file_name, format="pdf")
+        pp = PdfPages(file_name)
+        pp.savefig()
+        pp.close()
 
     def run(self):
         """Runs the sequence of the above steps."""
