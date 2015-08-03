@@ -4,9 +4,9 @@ import math
 logger = mandelbrot.get_logger(__name__)
 
 
-class NaiveCalculator(mandelbrot.MandelbrotCalculator):
-    file_name_data = "naive_data.csv"
-    file_name_plot = "naive_plot.pdf"
+class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
+    file_name_data = "optimised_data.csv"
+    file_name_plot = "optimised_plot.pdf"
 
     def calculate(self):
         ms = list()
