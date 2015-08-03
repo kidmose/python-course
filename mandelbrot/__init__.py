@@ -4,6 +4,9 @@ Mini project for course in python calculating Mandelbrot fractals.
 import logging
 import sys
 import os
+import matplotlib
+# Force matplotlib to not use any Xwindows backend.
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
