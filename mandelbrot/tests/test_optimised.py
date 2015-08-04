@@ -3,6 +3,7 @@
 
 import unittest
 import os
+import pyximport; pyximport.install()
 from mandelbrot.optimised import OptimisedCalculator
 from mandelbrot import tests
 

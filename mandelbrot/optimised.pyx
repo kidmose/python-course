@@ -33,6 +33,32 @@ class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
     ## Speed-up
     Still negligible.
     Apparently the comparissons and/or the variable dereference is what takes the time.
+
+    # Optimisation step 03
+    ## Observation
+    To cut down the most expensive part - the while-loop with comparisson and multipe references -
+    at least two potential approaches exist:
+    Vectorise to eliminate looping or compile to make operations cheaper.
+    ## Change
+    We use cython to translate the code into C which is then compiled.
+    ## Speed-up
+    `line_profiler` can no longer be used.
+    We use `timeit` within ipython to compare against the naive implementation and
+    see aproximately 2 times speed-up:
+
+    >>> from mandelbrot.naive import NaiveCalculator as NC
+    >>> %timeit NC(I=100, Pim=100, Pre=100, T=10, output='output', pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0).calculate()
+    1 loops, best of 3: 164 ms per loop
+
+    >>> import pyximport; pyximport.install()
+    (None, <pyximport.pyximport.PyxImporter at 0x7f10619c6240>)
+    >>> from mandelbrot.optimised import OptimisedCalculator as OC
+    >>> %timeit OC(I=100, Pim=100, Pre=100, T=10, output='output', pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0).calculate()
+    10 loops, best of 3: 81.5 ms per loop
+
+    After compilation we rely on cythons annotation for a "profile",
+    as the compilation obfuscates the output of cProfile making it hard to use
+    while line_profiler cannot be used at all.
     """
 
     file_name_data = "optimised_data.csv"

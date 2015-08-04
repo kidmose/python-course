@@ -15,6 +15,7 @@ setup(
     install_requires=[
         'matplotlib',
         'pytest',
+        'cython',
     ],
     classifiers=[
         'Environment :: Console',
