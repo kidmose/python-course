@@ -19,6 +19,6 @@ before_install:
   - pip install cython
 # command to install dependencies
 install:
-  - "python setup.py develop"
+  - travis_wait python setup.py develop
 # command to run tests
 script: py.test -v mandelbrot
