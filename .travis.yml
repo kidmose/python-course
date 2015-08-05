@@ -15,6 +15,8 @@ before_install:
   - sudo apt-get update -qq
 # matplotlib dependencies
   - sudo apt-get install -qq build-essential python-dev python3-dev libpng12-dev libjpeg8-dev libfreetype6-dev
+# Cython is needed to install
+  - pip install cython
 # command to install dependencies
 install:
   - "python setup.py develop"
