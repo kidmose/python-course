@@ -5,7 +5,7 @@ import argparse
 import mandelbrot
 from mandelbrot import naive
 from mandelbrot import optimised
-#from mandelbrot import parallel 
+from mandelbrot import parallel
 
 if __name__ == "__main__":
     # Create an argument parser which also shows the defaults when --help is
@@ -26,6 +26,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--naive', action='store_true', help='Whether to run the naive calculation')
     parser.add_argument('--optimised', action='store_true', help='Whether to run the optimised calculation')
+    parser.add_argument('--parallel', action='store_true', help='Whether to run the parallel calculation')
     
     parser.add_argument('--output', type=str, default="output", help='Output folder')
 
@@ -41,4 +42,8 @@ if __name__ == "__main__":
     if args.optimised:
         logger.info('Running cython')
         optimised.OptimisedCalculator(**dict(args._get_kwargs())).run()
+        logger.info('Done')
+    if args.parallel:
+        logger.info('Running parallel')
+        parallel.ParallelCalculator(**dict(args._get_kwargs())).run()
         logger.info('Done')

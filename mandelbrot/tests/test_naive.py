@@ -6,8 +6,8 @@ import os
 from mandelbrot.naive import NaiveCalculator
 from mandelbrot import tests
 
-NAIVE_DATA_FILE = os.path.join(tests.OUTPUT_DIR, NaiveCalculator.file_name_data)
-NAIVE_PLOT_FILE = os.path.join(tests.OUTPUT_DIR, NaiveCalculator.file_name_plot)
+DATA_FILE = os.path.join(tests.OUTPUT_DIR, NaiveCalculator.file_name_data)
+PLOT_FILE = os.path.join(tests.OUTPUT_DIR, NaiveCalculator.file_name_plot)
 
 class Test(unittest.TestCase):
     # Class Under Test
@@ -37,12 +37,12 @@ class Test(unittest.TestCase):
         # test save and load
         c = self.cut(**tests.PARAM_LIST)
         ms1 = c.calculate()
-        c.save_data(ms1, NAIVE_DATA_FILE)
+        c.save_data(ms1, DATA_FILE)
 
-        self.assertTrue(os.path.isfile(NAIVE_DATA_FILE))
+        self.assertTrue(os.path.isfile(DATA_FILE))
 
         ms2 = list()
-        with open(NAIVE_DATA_FILE, 'r') as f:
+        with open(DATA_FILE, 'r') as f:
             for line in f:
                 row = list()
                 for cell in line.split(";"):
@@ -52,9 +52,9 @@ class Test(unittest.TestCase):
         self.assertEqual(ms1, ms2)
 
         # test that is overwrites, not appends
-        c.save_data(ms1, NAIVE_DATA_FILE)
+        c.save_data(ms1, DATA_FILE)
         ms2 = list()
-        with open(NAIVE_DATA_FILE, 'r') as f:
+        with open(DATA_FILE, 'r') as f:
             for line in f:
                 row = list()
                 for cell in line.split(";"):
@@ -66,8 +66,8 @@ class Test(unittest.TestCase):
     def test_plot(self):
         c = self.cut(**tests.PARAM_LIST)
         ms = c.calculate()
-        c.plot(ms, NAIVE_PLOT_FILE)
-        self.assertTrue(os.path.isfile(NAIVE_PLOT_FILE))
+        c.plot(ms, PLOT_FILE)
+        self.assertTrue(os.path.isfile(PLOT_FILE))
 
     def test_run(self):
         c = self.cut(**tests.PARAM_LIST).run()
