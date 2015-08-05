@@ -119,13 +119,13 @@ class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
     def calculate(self):
         # Decalaring variables for cython
         cdef double im_span, im_step, re_span, re_step
-        cdef unsigned long Tprecomp
+        # cdef unsigned long long int T # let python handle the overflowing 
         cdef unsigned int i_im, i_re, Pim, Pre, i, I
         cdef double im, re, pim_min, pre_min
         cdef double complex z, c
 
         # Avoiding object reference for constants
-        Tprecomp = self.T**2 # .. eliminate square root
+        T = self.T**4
         Pim = self.Pim
         Pre = self.Pre
         pim_min = self.pim_min
@@ -146,7 +146,7 @@ class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
                 c = i_re*re_step + pre_min + im*1j
                 i = 0
                 z = 0+0j
-                while abs(z) <= Tprecomp and i < I:
+                while (z.real*z.real + z.imag*z.imag) <= T and i < I: # sqrt(abs(z))<=t**4 and i
                     z = z**2 + c
                     i += 1
                 row.append(float(i)/float(I))
