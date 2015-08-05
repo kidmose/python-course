@@ -92,6 +92,25 @@ class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
     >>> %timeit OC(I=100, Pim=100, Pre=100, T=10, output='output', pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0).calculate()
     10 loops, best of 3: 36 ms per loop
 
+    # Optimisation step 05
+
+    ## Observation
+
+    The `abs(...)` in the innermost loop is called many times and also general so assumed ineffective.
+
+    ## Change
+
+    Specialise calculation, move some out to precalculation.
+
+    ## Speed-up
+
+    >>> %timeit OC(I=100, Pim=100, Pre=100, T=10, output='output', pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0).calculate()
+    10 loops, best of 3: 20.7 ms per loop
+
+    And with 1000x1000 points rather than 100x100 we see it's roughly linear:
+
+    >>> %timeit OC(I=100, Pim=1000, Pre=1000, T=10, output='output', pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0).calculate()
+    1 loops, best of 3: 2.58 s per loop
     """
 
     file_name_data = "optimised_data.csv"
