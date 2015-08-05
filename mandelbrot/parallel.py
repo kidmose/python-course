@@ -1,6 +1,7 @@
 import mandelbrot
 import math
 import numpy as np
+from multiprocessing import Pool
 
 logger = mandelbrot.get_logger(__name__)
 
@@ -17,24 +18,14 @@ class ParallelCalculator(mandelbrot.MandelbrotCalculator):
         re_span = self.pre_max-self.pre_min
         re_step = re_span / self.Pre
         
-        # Create grids for results and c values
-        results = np.zeros([self.Pim, self.Pre])
-        c_s = np.zeros([self.Pim, self.Pre], dtype=complex)
-        for i_im in range(self.Pim):
-            im = i_im*im_step + self.pim_min
-            for i_re in range(self.Pre):
-                c_s[i_im, i_re] = i_re*re_step + self.pre_min + im*1j
+        # calculate list of c values (flat list)
+        re_s = [i*re_step + self.pre_min for i in range(self.Pre)]
+        im_s = [i*im_step + self.pim_min for i in range(self.Pim)]
+        c_s = [re+im*1j for im in im_s for re in re_s]
 
-        # create list of indexes
-        idxs = []
-        for i_im in range(self.Pim):
-            for i_re in range(self.Pre):
-                idxs.append((i_im, i_re))
-
-        for idx in idxs:
-            results[idx] = self.single_point_calculation(c_s[idx])
-
-        return results.tolist()
+        pool = Pool(processes=self.n)
+        results = pool.map(self.single_point_calculation, c_s)
+        return [results[self.Pre*i : self.Pre*(i+1)] for i in range(self.Pim)] # unflatten
 
     def single_point_calculation(self, c):
         """Calculates the value for a single location"""

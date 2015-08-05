@@ -25,6 +25,7 @@ class MandelbrotCalculator(object):
     """
 
     def __init__(self, *args, **kwargs):
+        # Mandatory parameters - required for calculation
         try:
             self.pre_min = kwargs['pre_min']
             self.pre_max = kwargs['pre_max']
@@ -35,10 +36,12 @@ class MandelbrotCalculator(object):
             self.T = kwargs['T']
             self.I = kwargs['I']
         except KeyError as e:
-            logger.error("All parameters are mandatory.")
+            logger.error("Parameter is mandatory.")
             raise e
 
+        # Optional parameters
         self.output_dir = kwargs.get('output_dir', 'output')
+        self.n = kwargs.get('n', 4)
 
         if self.pre_min >= self.pre_max:
             raise ValueError("min must be below max")

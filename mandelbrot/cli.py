@@ -23,6 +23,7 @@ if __name__ == "__main__":
 
     parser.add_argument('-T', type=int, default=10, help='Threshold T for calculation')
     parser.add_argument('-I', type=int, default=100, help='Max iterations pr. point')
+    parser.add_argument('-n', type=int, default=4, help='Number of parallel process (Applies to parallel only)')
 
     parser.add_argument('--naive', action='store_true', help='Whether to run the naive calculation')
     parser.add_argument('--optimised', action='store_true', help='Whether to run the optimised calculation')
