@@ -4,6 +4,7 @@ import argparse
 
 import mandelbrot
 from mandelbrot import naive
+from mandelbrot import optimised
 #from mandelbrot import parallel 
 
 if __name__ == "__main__":
@@ -39,7 +40,5 @@ if __name__ == "__main__":
         logger.info('Done')
     if args.optimised:
         logger.info('Running cython')
-        import pyximport; pyximport.install()
-        import optimised
         optimised.OptimisedCalculator(**dict(args._get_kwargs())).run()
         logger.info('Done')

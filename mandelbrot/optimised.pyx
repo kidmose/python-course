@@ -50,8 +50,6 @@ class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
     >>> %timeit NC(I=100, Pim=100, Pre=100, T=10, output='output', pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0).calculate()
     1 loops, best of 3: 164 ms per loop
 
-    >>> import pyximport; pyximport.install()
-    (None, <pyximport.pyximport.PyxImporter at 0x7f10619c6240>)
     >>> from mandelbrot.optimised import OptimisedCalculator as OC
     >>> %timeit OC(I=100, Pim=100, Pre=100, T=10, output='output', pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0).calculate()
     10 loops, best of 3: 81.5 ms per loop
