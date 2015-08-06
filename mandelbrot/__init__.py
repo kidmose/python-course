@@ -9,7 +9,6 @@ from time import time
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 
 
@@ -79,9 +78,7 @@ class MandelbrotCalculator(object):
 
         if not os.path.exists(os.path.dirname(file_name)):
             os.makedirs(os.path.dirname(file_name))
-        pp = PdfPages(file_name)
-        pp.savefig()
-        pp.close()
+        plt.savefig(file_name)
 
     def run(self):
         """Runs the sequence of the above steps."""

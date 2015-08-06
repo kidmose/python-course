@@ -11,7 +11,7 @@ logger = mandelbrot.get_logger(__name__)
 
 class ParallelCalculator(mandelbrot.MandelbrotCalculator):
     file_name_data = "parallel_data.csv"
-    file_name_plot = "parallel_plot.pdf"
+    file_name_plot = "parallel_plot.png"
 
     def calculate(self):
 

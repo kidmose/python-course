@@ -114,7 +114,7 @@ class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
     """
 
     file_name_data = "optimised_data.csv"
-    file_name_plot = "optimised_plot.pdf"
+    file_name_plot = "optimised_plot.png"
 
     def calculate(self):
         # Decalaring variables for cython
