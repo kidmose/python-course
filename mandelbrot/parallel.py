@@ -40,9 +40,9 @@ class ParallelCalculator(mandelbrot.MandelbrotCalculator):
         return i/self.I
 
 
-# fix for old python versions (before 3.0) to enable pickling methods
+# fix for old python versions (before 3) to enable pickling methods
 # http://bytes.com/topic/python/answers/552476-why-cant-you-pickle-instancemethods
-if sys.hexversion <= 34014960: # version <= python 2.7.6
+if sys.hexversion < 0x03000000: # prior to python 3
     def _pickle_method(method):
         func_name = method.im_func.__name__
         obj = method.im_self
