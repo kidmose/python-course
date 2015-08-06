@@ -14,9 +14,12 @@ class Test(tests.test_naive.Test):
     cut = ParallelCalculator
 
     def test_multiple_processes(self):
+        print("Test for exception with n=0")
         with self.assertRaises(ValueError):
             self.test_calculate(n=0)
+        print("Test with 1 process")
         self.test_calculate(n=1)
+        print("Test with 4 processes")
         self.test_calculate(n=4)
 
 
