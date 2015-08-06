@@ -89,17 +89,17 @@ class MandelbrotCalculator(object):
         print("Running calculate...")
         start = time()
         ms = self.calculate()
-        print("calculate completed in {:.2}s".format(time()-start))
+        print("calculate completed in {:,.2f}s".format(time()-start))
 
         print("Running plot...")
         start = time()
         self.plot(ms, os.path.join(self.output_dir, self.file_name_plot))
-        print("plot completed in {:.2}s".format(time()-start))
+        print("plot completed in {:,.2f}s".format(time()-start))
 
         print("Running save_data...")
         start = time()
         self.save_data(ms, os.path.join(self.output_dir, self.file_name_data))
-        print("save_data completed in {:.2}s".format(time()-start))
+        print("save_data completed in {:,.2f}s".format(time()-start))
 
     @property
     def file_name_data(self):
