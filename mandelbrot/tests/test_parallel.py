@@ -13,6 +13,12 @@ class Test(tests.test_naive.Test):
     # Class under test
     cut = ParallelCalculator
 
+    def test_multiple_processes(self):
+        with self.assertRaises(ValueError):
+            self.test_calculate(n=0)
+        self.test_calculate(n=1)
+        self.test_calculate(n=4)
+
 
 if __name__ == "__main__":
     unittest.main()

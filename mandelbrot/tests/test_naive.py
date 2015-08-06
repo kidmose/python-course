@@ -72,28 +72,28 @@ class Test(unittest.TestCase):
     def test_run(self):
         c = self.cut(**tests.PARAM_LIST).run()
 
-    def test_calculate(self):
+    def test_calculate(self, n=None):
         """Ensure that the result always is the same."""
 
         self.assertEqual(
-            self.cut(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1, I=1).calculate(),
+            self.cut(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1, I=1, n=n).calculate(),
             [[1.0]]
         )
 
         self.assertEqual(
-            self.cut(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1e6, I=1e6).calculate(),
+            self.cut(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1e6, I=1e6, n=n).calculate(),
             [[1.0]]
         )
 
         self.assertEqual(
-            self.cut(pre_min=-1, pre_max=1, Pre=3, pim_min=-1, pim_max=1, Pim=3, T=1e6, I=1e6).calculate(),
+            self.cut(pre_min=-1, pre_max=1, Pre=3, pim_min=-1, pim_max=1, Pim=3, T=1e6, I=1e6, n=n).calculate(),
             [[8e-06, 1e-05, 8e-06],
              [1.7e-05, 1.0, 1.0],
              [1.7e-05, 1.0, 1.0]]
         )
 
         self.assertEqual(
-            self.cut(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10, I=10).calculate(),
+            self.cut(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10, I=10, n=n).calculate(),
             [[0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3],
              [0.3, 0.3, 0.3, 0.3, 0.4, 0.3, 0.3, 0.3, 0.3, 0.3],
              [0.3, 0.3, 0.4, 0.4, 0.4, 0.4, 0.4, 0.3, 0.3, 0.3],
@@ -107,7 +107,7 @@ class Test(unittest.TestCase):
         )
 
         self.assertEqual(
-            self.cut(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10000000, I=10000).calculate(), 
+            self.cut(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10000000, I=10000, n=n).calculate(), 
             [[0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006],
              [0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006],
              [0.0006, 0.0006, 0.0006, 0.0007, 0.0007, 0.0007, 0.0006, 0.0006, 0.0006, 0.0006],
