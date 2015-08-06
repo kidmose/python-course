@@ -41,7 +41,7 @@ if __name__ == "__main__":
         naive.NaiveCalculator(**dict(args._get_kwargs())).run()
         print('Done')
     if args.optimised:
-        print('Running cython')
+        print('Running optimised')
         optimised.OptimisedCalculator(**dict(args._get_kwargs())).run()
         print('Done')
     if args.parallel:
