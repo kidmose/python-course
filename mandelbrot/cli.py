@@ -33,18 +33,18 @@ if __name__ == "__main__":
 
     args = parser.parse_args()        
 
-    logger = mandelbrot.get_logger(__name__)
-    logger.info('Arguments: {}'.format(args))
+    # logger = mandelbrot.get_logger(__name__)
+    print('Arguments: {}'.format(args))
 
     if args.naive:
-        logger.info('Running naive')
+        print('Running naive')
         naive.NaiveCalculator(**dict(args._get_kwargs())).run()
-        logger.info('Done')
+        print('Done')
     if args.optimised:
-        logger.info('Running cython')
+        print('Running cython')
         optimised.OptimisedCalculator(**dict(args._get_kwargs())).run()
-        logger.info('Done')
+        print('Done')
     if args.parallel:
-        logger.info('Running parallel')
+        print('Running parallel')
         parallel.ParallelCalculator(**dict(args._get_kwargs())).run()
-        logger.info('Done')
+        print('Done')
