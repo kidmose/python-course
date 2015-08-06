@@ -1,0 +1,35 @@
+Wrote profile results to cli.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 2.91004 s
+File: /home/dkegokid/git-reps/python-course/mandelbrot/optimised.py
+Function: calculate at line 41
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    41                                               @profile
+    42                                               def calculate(self):
+    43         1            5      5.0      0.0          ms = list()
+    44                                           
+    45         1            4      4.0      0.0          im_span = self.pim_max-self.pim_min
+    46         1            5      5.0      0.0          im_step = im_span / self.Pim
+    47         1            3      3.0      0.0          re_span = self.pre_max-self.pre_min
+    48         1            4      4.0      0.0          re_step = re_span / self.Pre
+    49                                               
+    50         1            5      5.0      0.0          Tprecomp = self.T**2
+    51                                           
+    52       101          297      2.9      0.0          for i_im in range(self.Pim):
+    53       100          818      8.2      0.0              im = i_im*im_step + self.pim_min
+    54       100         8924     89.2      0.3              row = list()
+    55     10100        31469      3.1      1.1              for i_re in range(self.Pre):
+    56     10000        63310      6.3      2.2                  c = i_re*re_step + self.pre_min + im*1j
+    57     10000        33026      3.3      1.1                  i = 0
+    58     10000        31025      3.1      1.1                  z = 0+0j
+    59    245245       989059      4.0     34.0                  while abs(z) <= Tprecomp and i < self.I:
+    60    235245       918486      3.9     31.6                      z = z**2 + c
+    61    235245       775178      3.3     26.6                      i += 1
+    62     10000        58081      5.8      2.0                  row.append(i/self.I)
+    63       100          336      3.4      0.0              ms.append(row)
+    64                                           
+    65         1            3      3.0      0.0          return ms
+

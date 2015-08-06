@@ -1,0 +1,33 @@
+Wrote profile results to cli.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 3.12147 s
+File: /home/dkegokid/git-reps/python-course/mandelbrot/optimised.py
+Function: calculate at line 31
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    31                                               @profile
+    32                                               def calculate(self):
+    33         1            4      4.0      0.0          ms = list()
+    34                                           
+    35         1            4      4.0      0.0          im_span = self.pim_max-self.pim_min
+    36         1            3      3.0      0.0          im_step = im_span / self.Pim
+    37         1            3      3.0      0.0          re_span = self.pre_max-self.pre_min
+    38         1            3      3.0      0.0          re_step = re_span / self.Pre
+    39                                            
+    40       101          310      3.1      0.0          for i_im in range(self.Pim):
+    41       100          681      6.8      0.0              im = i_im*im_step + self.pim_min
+    42       100          637      6.4      0.0              row = list()
+    43     10100        32822      3.2      1.1              for i_re in range(self.Pre):
+    44     10000        36592      3.7      1.2                  c = i_re*re_step + self.pre_min + im*1j
+    45     10000        46177      4.6      1.5                  i = 0
+    46     10000        30837      3.1      1.0                  z = 0+0j
+    47    245245      1074159      4.4     34.4                  while abs(z) <= self.T**2 and i < self.I:
+    48    235245      1012000      4.3     32.4                      z = z**2 + c
+    49    235245       840369      3.6     26.9                      i += 1
+    50     10000        46517      4.7      1.5                  row.append(i/self.I)
+    51       100          346      3.5      0.0              ms.append(row)
+    52                                           
+    53         1            4      4.0      0.0          return ms
+

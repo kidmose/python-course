@@ -1,4 +1,6 @@
-import  mandelbrot
+from __future__ import division
+
+import mandelbrot
 import math
 
 logger = mandelbrot.get_logger(__name__)
@@ -20,16 +22,13 @@ class NaiveCalculator(mandelbrot.MandelbrotCalculator):
             im = i_im*im_step + self.pim_min
             row = list()
             for i_re in range(self.Pre):
-                re = i_re*re_step + self.pre_min
-                row.append(self.iterate(re+im*1j))
+                c = i_re*re_step + self.pre_min + im*1j
+                i = 0
+                z = 0+0j
+                while math.sqrt(abs(z)) <= self.T and i < self.I:
+                    z = z**2 + c
+                    i += 1
+                row.append(i/self.I)
             ms.append(row)
 
         return ms
-
-    def iterate(self, c):
-        i = 0
-        z = 0+0j
-        while math.sqrt(abs(z)) <= self.T and i < self.I:
-            z = z**2 + c
-            i += 1
-        return i/self.I

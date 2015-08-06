@@ -28,6 +28,7 @@ On Linux Mint 17.1 and presumeable recent ubuntus they can be installed with:
 
 	$ virtualenv -p python3 env  # Create virtual env for isolation
 	$ source env/bin/activate  # Enter virtual environment
+	$ pip install cython # setup relies on python
     $ python setup.py develop  # "develop" for symlinks to reflect code changes
 	
 	# Alternatively, for an installation that will not be edited:

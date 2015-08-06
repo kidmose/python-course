@@ -3,13 +3,16 @@
 
 import unittest
 import os
-from mandelbrot.naive import NaiveCalculator as C
+from mandelbrot.naive import NaiveCalculator
 from mandelbrot import tests
 
-NAIVE_DATA_FILE = os.path.join(tests.OUTPUT_DIR, C.file_name_data)
-NAIVE_PLOT_FILE = os.path.join(tests.OUTPUT_DIR, C.file_name_plot)
+DATA_FILE = os.path.join(tests.OUTPUT_DIR, NaiveCalculator.file_name_data)
+PLOT_FILE = os.path.join(tests.OUTPUT_DIR, NaiveCalculator.file_name_plot)
 
 class Test(unittest.TestCase):
+    # Class Under Test
+    cut = NaiveCalculator
+
     def setUp(self):
         tests.purge_output_dir()
 
@@ -17,7 +20,7 @@ class Test(unittest.TestCase):
         tests.delete_output_dir()
 
     def test_calculate(self):
-        c = C(**tests.PARAM_LIST)
+        c = self.cut(**tests.PARAM_LIST)
         ms = c.calculate()
 
         # Check dimensions
@@ -32,14 +35,14 @@ class Test(unittest.TestCase):
 
     def test_save_data(self):
         # test save and load
-        c = C(**tests.PARAM_LIST)
+        c = self.cut(**tests.PARAM_LIST)
         ms1 = c.calculate()
-        c.save_data(ms1, NAIVE_DATA_FILE)
+        c.save_data(ms1, DATA_FILE)
 
-        self.assertTrue(os.path.isfile(NAIVE_DATA_FILE))
+        self.assertTrue(os.path.isfile(DATA_FILE))
 
         ms2 = list()
-        with open(NAIVE_DATA_FILE, 'r') as f:
+        with open(DATA_FILE, 'r') as f:
             for line in f:
                 row = list()
                 for cell in line.split(";"):
@@ -49,9 +52,9 @@ class Test(unittest.TestCase):
         self.assertEqual(ms1, ms2)
 
         # test that is overwrites, not appends
-        c.save_data(ms1, NAIVE_DATA_FILE)
+        c.save_data(ms1, DATA_FILE)
         ms2 = list()
-        with open(NAIVE_DATA_FILE, 'r') as f:
+        with open(DATA_FILE, 'r') as f:
             for line in f:
                 row = list()
                 for cell in line.split(";"):
@@ -61,36 +64,36 @@ class Test(unittest.TestCase):
         self.assertEqual(ms1, ms2)
 
     def test_plot(self):
-        c = C(**tests.PARAM_LIST)
+        c = self.cut(**tests.PARAM_LIST)
         ms = c.calculate()
-        c.plot(ms, NAIVE_PLOT_FILE)
-        self.assertTrue(os.path.isfile(NAIVE_PLOT_FILE))
+        c.plot(ms, PLOT_FILE)
+        self.assertTrue(os.path.isfile(PLOT_FILE))
 
     def test_run(self):
-        c = C(**tests.PARAM_LIST).run()
+        c = self.cut(**tests.PARAM_LIST).run()
 
-    def test_calculate(self):
+    def test_calculate(self, n=None):
         """Ensure that the result always is the same."""
 
         self.assertEqual(
-            C(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1, I=1).calculate(),
+            self.cut(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1, I=1, n=n).calculate(),
             [[1.0]]
         )
 
         self.assertEqual(
-            C(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1e6, I=1e6).calculate(),
+            self.cut(pre_min=0, pre_max=1, Pre=1, pim_min=0, pim_max=1, Pim=1, T=1e6, I=1e6, n=n).calculate(),
             [[1.0]]
         )
 
         self.assertEqual(
-            C(pre_min=-1, pre_max=1, Pre=3, pim_min=-1, pim_max=1, Pim=3, T=1e6, I=1e6).calculate(),
+            self.cut(pre_min=-1, pre_max=1, Pre=3, pim_min=-1, pim_max=1, Pim=3, T=1e6, I=1e6, n=n).calculate(),
             [[8e-06, 1e-05, 8e-06],
              [1.7e-05, 1.0, 1.0],
              [1.7e-05, 1.0, 1.0]]
         )
 
         self.assertEqual(
-            C(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10, I=10).calculate(),
+            self.cut(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10, I=10, n=n).calculate(),
             [[0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3],
              [0.3, 0.3, 0.3, 0.3, 0.4, 0.3, 0.3, 0.3, 0.3, 0.3],
              [0.3, 0.3, 0.4, 0.4, 0.4, 0.4, 0.4, 0.3, 0.3, 0.3],
@@ -104,7 +107,7 @@ class Test(unittest.TestCase):
         )
 
         self.assertEqual(
-            C(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10000000, I=10000).calculate(), 
+            self.cut(pre_min=-4, pre_max=5, Pre=10, pim_min=-4, pim_max=5, Pim=10, T=10000000, I=10000, n=n).calculate(), 
             [[0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006],
              [0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006],
              [0.0006, 0.0006, 0.0006, 0.0007, 0.0007, 0.0007, 0.0006, 0.0006, 0.0006, 0.0006],

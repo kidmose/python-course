@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from Cython.Build import cythonize
 
 setup(
     name='mandelbrot',
@@ -12,9 +13,11 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
+    ext_modules=cythonize("mandelbrot/optimised.pyx"),
     install_requires=[
         'matplotlib',
         'pytest',
+        'cython',
     ],
     classifiers=[
         'Environment :: Console',
