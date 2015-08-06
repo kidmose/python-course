@@ -40,3 +40,4 @@ nosetests.xml
 /mandelbrot-0.0.1/
 /output/
 /mandelbrot/optimised.c
+/env27/

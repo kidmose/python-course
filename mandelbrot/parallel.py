@@ -1,6 +1,9 @@
+from __future__ import division
+
 import mandelbrot
 import math
 import numpy as np
+import sys
 from multiprocessing import Pool
 
 logger = mandelbrot.get_logger(__name__)
@@ -35,3 +38,28 @@ class ParallelCalculator(mandelbrot.MandelbrotCalculator):
             z = z**2 + c
             i += 1
         return i/self.I
+
+
+# fix for old python versions (before 3.0) to enable pickling methods
+# http://bytes.com/topic/python/answers/552476-why-cant-you-pickle-instancemethods
+if sys.hexversion <= 34014960: # version <= python 2.7.6
+    def _pickle_method(method):
+        func_name = method.im_func.__name__
+        obj = method.im_self
+        cls = method.im_class
+        return _unpickle_method, (func_name, obj, cls)
+
+    def _unpickle_method(func_name, obj, cls):
+        for cls in cls.mro():
+            try:
+                func = cls.__dict__[func_name]
+            except KeyError:
+                pass
+            else:
+                break
+        return func.__get__(obj, cls)
+
+    import copy_reg
+    import types
+    copy_reg.pickle(types.MethodType, _pickle_method, _unpickle_method)
+
