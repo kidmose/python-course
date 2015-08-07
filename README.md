@@ -69,3 +69,38 @@ Implement the full gitflow workflow is deemed overkill for a small, single contr
  * Test coverage
  * Smart logging
  * PEP8/pyflake evaluation
+
+## Results
+
+	(env)egk@js4:[python-course]$ ./mandelbrot/cli.py --naive
+	Arguments: Namespace(I=100, Pim=5000, Pre=5000, T=10, n=4, naive=True, optimised=False, output='output', parallel=False, pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0)
+	Running naive
+	Running calculate...
+	calculate completed in 570.83s
+	Running plot...
+	plot completed in 1,728.02s
+	Running save_data...
+	save_data completed in 41.20s
+	Done
+
+	(env)egk@js4:[python-course]$ ./mandelbrot/cli.py --optimised
+	Arguments: Namespace(I=100, Pim=5000, Pre=5000, T=10, n=4, naive=False, optimised=True, output='output', parallel=False, pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0)
+	Running optimised
+	Running calculate...
+	calculate completed in 44.73s
+	Running plot...
+	plot completed in 1,752.35s
+	Running save_data...
+	save_data completed in 41.23s
+	Done
+
+	(env)egk@js4:[python-course]$ ./mandelbrot/cli.py --parallel -n=1
+	Arguments: Namespace(I=100, Pim=5000, Pre=5000, T=10, n=1, naive=False, optimised=False, output='output', parallel=True, pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0)
+	Running parallel
+	Running calculate...
+	calculate completed in 634.00s
+	Running plot...
+	plot completed in 1,819.19s
+	Running save_data...
+	save_data completed in 41.31s
+	Done
