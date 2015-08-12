@@ -112,7 +112,7 @@ The `output` folder contains the plots produced by the algorithm in its various 
 ![Plot of result from naive](output/naive_plot.png "Plot of result for naive implementation (Representative of all three implementations)")
 
 `output/cli.log` contains logs for running the algorithms on the AAU job server.
-While this might be a noisy environment, the alternative was a virtual machine too little resources to run the naive problem on a reasonably sized problem (Encountered exceptions due to memory not being available).
+While this might be a noisy environment, the alternative was a virtual machine with too little resources to run the naive problem on a reasonably sized problem (Encountered exceptions due to memory not being available).
 It is assumed that the low utilisation across all cores means the interference from other task are limited, providing for roughly deterministic results.
 In the docstring of `mandelbrot.optimised.OptimisedCalculator` (`mandelbrot/optimised.pyx`) some step wise results are also included.
 
