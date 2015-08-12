@@ -5,10 +5,10 @@ import logging
 import sys
 import os
 import matplotlib
+from time import time
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 
 
@@ -78,15 +78,25 @@ class MandelbrotCalculator(object):
 
         if not os.path.exists(os.path.dirname(file_name)):
             os.makedirs(os.path.dirname(file_name))
-        pp = PdfPages(file_name)
-        pp.savefig()
-        pp.close()
+        plt.savefig(file_name)
 
     def run(self):
         """Runs the sequence of the above steps."""
+
+        print("Running calculate...")
+        start = time()
         ms = self.calculate()
+        print("calculate completed in {:,.2f}s".format(time()-start))
+
+        print("Running plot...")
+        start = time()
         self.plot(ms, os.path.join(self.output_dir, self.file_name_plot))
+        print("plot completed in {:,.2f}s".format(time()-start))
+
+        print("Running save_data...")
+        start = time()
         self.save_data(ms, os.path.join(self.output_dir, self.file_name_data))
+        print("save_data completed in {:,.2f}s".format(time()-start))
 
     @property
     def file_name_data(self):

@@ -8,7 +8,7 @@ logger = mandelbrot.get_logger(__name__)
 
 class NaiveCalculator(mandelbrot.MandelbrotCalculator):
     file_name_data = "naive_data.csv"
-    file_name_plot = "naive_plot.pdf"
+    file_name_plot = "naive_plot.png"
 
     def calculate(self):
         ms = list()
