@@ -1,4 +1,5 @@
 from __future__ import division
+"""Parallel implementation of mandelbrot calculator."""
 
 import mandelbrot
 import math
@@ -10,11 +11,16 @@ logger = mandelbrot.get_logger(__name__)
 
 
 class ParallelCalculator(mandelbrot.MandelbrotCalculator):
+    """
+    Parallel implementation of mandelbrot calculator.
+
+    Changed to use numpy arrays to enable the parallelism.
+    """
     file_name_data = "parallel_data.csv"
     file_name_plot = "parallel_plot.png"
 
     def calculate(self):
-
+        """Implements dispatching functionality."""
         # calculate grid size and steps
         im_span = self.pim_max-self.pim_min
         im_step = im_span / self.Pim
@@ -31,7 +37,12 @@ class ParallelCalculator(mandelbrot.MandelbrotCalculator):
         return [results[self.Pre*i : self.Pre*(i+1)] for i in range(self.Pim)] # unflatten
 
     def single_point_calculation(self, c):
-        """Calculates the value for a single location"""
+        """
+        Calculates the value for a single location.
+
+        This is the method which is distributed, 
+        along with the data, to each process.
+        """
         i = 0
         z = 0+0j
         while math.sqrt(abs(z)) <= self.T and i < self.I:
@@ -62,4 +73,3 @@ if sys.hexversion < 0x03000000: # prior to python 3
     import copy_reg
     import types
     copy_reg.pickle(types.MethodType, _pickle_method, _unpickle_method)
-

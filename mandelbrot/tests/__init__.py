@@ -1,7 +1,8 @@
 """
 Test suite for module.
 
-Holds constants and methods shared among in multiple tests.
+Holds constants and methods shared among multiple tests.
+See submodules for individual tests.
 """
 
 import os

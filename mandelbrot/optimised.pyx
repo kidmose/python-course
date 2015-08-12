@@ -1,3 +1,7 @@
+"""
+Efficient algorithm based on naive, implementing cython.
+"""
+
 import mandelbrot
 import math
 
@@ -7,6 +11,9 @@ logger = mandelbrot.get_logger(__name__)
 class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
     """
     Optimised calculation based on NaiveCalculator.
+
+    Adding cython provides the primary optimisation, 
+    secondarily some code rewrite in inner loop provides a minor contribution.
 
     Profiled using line_profiler with default parameters
     (I=100, Pim=100, Pre=100, T=10, naive=False, optimised=True,
@@ -117,6 +124,7 @@ class OptimisedCalculator(mandelbrot.MandelbrotCalculator):
     file_name_plot = "optimised_plot.png"
 
     def calculate(self):
+        """See module and parrent."""
         # Decalaring variables for cython
         cdef double im_span, im_step, re_span, re_step
         # cdef unsigned long long int T # let python handle the overflowing 
