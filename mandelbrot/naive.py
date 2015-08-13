@@ -1,4 +1,5 @@
 from __future__ import division
+"""Implementation of naive and inefficient mandelbrot calculator."""
 
 import mandelbrot
 import math
@@ -7,10 +8,12 @@ logger = mandelbrot.get_logger(__name__)
 
 
 class NaiveCalculator(mandelbrot.MandelbrotCalculator):
+    """See parrent."""
     file_name_data = "naive_data.csv"
     file_name_plot = "naive_plot.png"
 
     def calculate(self):
+        """See parrent."""
         ms = list()
 
         im_span = self.pim_max-self.pim_min

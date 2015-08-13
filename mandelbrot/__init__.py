@@ -110,6 +110,11 @@ class MandelbrotCalculator(object):
 
 
 def get_logger(name):
+    """
+    Returns the logger for the given name.
+
+    FAULTY: for some loggers lines are printed twice.
+    """
     logger = logging.getLogger(name)
     # remove any existing handlers
     for h in logger.handlers:

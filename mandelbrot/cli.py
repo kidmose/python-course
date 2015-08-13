@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Mandelbrot calculations with different implementations."""
+"""Command Line Interface for the package."""
 import argparse
 
 import mandelbrot

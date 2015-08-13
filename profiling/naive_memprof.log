@@ -1,0 +1,41 @@
+(env)dkegokid@dkegokid-VirtualBox ~/git-reps/python-course $ python -m memory_profiler mandelbrot/cli.py --Pre 100 --Pim 100 --naive
+Arguments: Namespace(I=100, Pim=100, Pre=100, T=10, n=4, naive=True, optimised=False, output='output', parallel=False, pim_max=1.5, pim_min=-1.5, pre_max=1.0, pre_min=-2.0)
+Running naive
+Running calculate...
+calculate completed in 59.85s
+Running plot...
+plot completed in 0.95s
+Running save_data...
+save_data completed in 0.01s
+Done
+Filename: /home/dkegokid/git-reps/python-course/mandelbrot/naive.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    15   38.648 MiB    0.000 MiB       @profile
+    16                                 def calculate(self):
+    17                                     """See parrent."""
+    18   38.648 MiB    0.000 MiB           ms = list()
+    19                             
+    20   38.648 MiB    0.000 MiB           im_span = self.pim_max-self.pim_min
+    21   38.648 MiB    0.000 MiB           im_step = im_span / self.Pim
+    22   38.648 MiB    0.000 MiB           re_span = self.pre_max-self.pre_min
+    23   38.648 MiB    0.000 MiB           re_step = re_span / self.Pre
+    24                             
+    25   38.855 MiB    0.207 MiB           for i_im in range(self.Pim):
+    26   38.855 MiB    0.000 MiB               im = i_im*im_step + self.pim_min
+    27   38.855 MiB    0.000 MiB               row = list()
+    28   38.855 MiB    0.000 MiB               for i_re in range(self.Pre):
+    29   38.855 MiB    0.000 MiB                   c = i_re*re_step + self.pre_min + im*1j
+    30   38.855 MiB    0.000 MiB                   i = 0
+    31   38.855 MiB    0.000 MiB                   z = 0+0j
+    32   38.855 MiB    0.000 MiB                   while math.sqrt(abs(z)) <= self.T and i < self.I:
+    33   38.855 MiB    0.000 MiB                       z = z**2 + c
+    34   38.855 MiB    0.000 MiB                       i += 1
+    35   38.855 MiB    0.000 MiB                   row.append(i/self.I)
+    36   38.855 MiB    0.000 MiB               ms.append(row)
+    37                             
+    38   38.855 MiB    0.000 MiB           return ms
+
+
+(env)dkegokid@dkegokid-VirtualBox ~/git-reps/python-course $ 
